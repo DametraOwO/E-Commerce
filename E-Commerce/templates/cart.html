@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .checkout-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .checkout-container .checkout-btn {
+            text-align: right;
+        }
+        .total-belanja {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .total-row {
+            font-weight: bold;
+        }
+        .total-row td {
+            text-align: right;
+        }
+
+        /* Gaya untuk tombol hapus (dalam kolom total) */
+        .delete-btn {
+            background-color: red;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Keranjang Belanja</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Beranda</a></li>
+                <li><a href="{{ url_for('cart') }}">Keranjang</a></li>
+                <li><a href="{{ url_for('admin_products') }}">Manajemen Produk</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Laporan Penjualan</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Isi Keranjang</h2>
+        {% if cart %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set total_price = 0 %}
+                    {% for item in cart %}
+                        {% set item_total = item['price'] * item['quantity'] %}
+                        <tr>
+                            <td>{{ item['name'] }}</td>
+                            <td>Rp {{ item['price'] }}</td>
+                            <td>{{ item['quantity'] }}</td>
+                            <td>
+                                Rp {{ item_total }}
+                                <!-- Tombol Hapus dengan emoji tempat sampah -->
+                                <button class="delete-btn" data-id="{{ item['id'] }}">🗑️</button>
+                            </td>
+                        </tr>
+                        {% set total_price = total_price + item_total %}
+                    {% endfor %}
+                    <tr class="total-row">
+                        <td colspan="3">Total Belanja</td>
+                        <td>Rp {{ total_price | round(0) }}</td>
+                    </tr>
+                </tbody>                
+            </table>
+            <div class="checkout-container">
+                <div class="checkout-btn">
+                    <form action="{{ url_for('checkout') }}" method="post">
+                        <button type="submit">Checkout</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p>Keranjang kosong.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Ketika tombol Hapus diklik
+            $('.delete-btn').click(function() {
+                var productId = $(this).data('id');  // Ambil ID produk dari data-id
+                
+                $.ajax({
+                    url: '/cart/delete/' + productId,  // URL untuk menghapus produk
+                    method: 'GET',
+                    success: function(response) {
+                        alert('Produk berhasil dihapus dari keranjang');
+                        location.reload();  // Reload halaman untuk memperbarui keranjang
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan dalam menghapus produk');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

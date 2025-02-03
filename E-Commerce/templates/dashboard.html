@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Penjualan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Laporan Penjualan</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Beranda</a></li>
+                <li><a href="{{ url_for('cart') }}">Keranjang</a></li>
+                <li><a href="{{ url_for('admin_products') }}">Manajemen Produk</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Laporan Penjualan</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Laporan Penjualan</h2>
+        {% if transactions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Transaksi</th>
+                        <th>Nama Barang</th>
+                        <th>Harga (Rp)</th>
+                        <th>Kuantitas</th> <!-- Kolom Kuantitas ditambahkan -->
+                        <th>Total Harga (Rp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        {% for item in transaction['items'] %}
+                            <tr>
+                                {% if loop.first %}
+                                    <td rowspan="{{ transaction['items'] | length }}">#{{ transaction['id'] }}</td>
+                                {% endif %}
+                                <td>{{ item['name'] }}</td>
+                                <td>Rp {{ item['price'] | round(0) }}</td>
+                                <td>{{ item['quantity'] }}</td> <!-- Menampilkan kuantitas -->
+                                {% if loop.first %}
+                                    <td rowspan="{{ transaction['items'] | length }}">Rp {{ transaction['total_price'] | round(0) }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Data transaksi kosong atau tidak ditemukan.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
