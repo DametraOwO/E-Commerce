@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "email": "user@example.com",
+        "password": "password123"
+    },
+    {
+        "id": 2,
+        "email": "degamega@gmail.com",
+        "password": "scrypt:32768:8:1$j1nPeskrucuZkMNh$c4f195ae512dbdc1333f0814d68957b1a7e34c3bb94a0a8bd8adb89c8eaccdc3e503a500d5d496473a14532d2c6d729ee313ec72f437cafa967c675eb9a133aa"
+    },
+    {
+        "id": 3,
+        "email": "digidaw@gmail.com",
+        "password": "scrypt:32768:8:1$CzfcEcndwpljUEue$0de51795749afc691fc3fe214856ea1ad5e8bb316ac354b80de4aac8612ef9f2fc225003bf8b28664d7a9aba979bf55d6dbdfe0c6866e419e9685e41965f1e7b"
+    }
+]

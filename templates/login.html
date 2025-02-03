@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - E-commerce</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container" id="formContainer">
+        <h1>Login</h1>
+
+        <!-- Form Login -->
+        <form action="/login" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Masukkan email Anda">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Belum punya akun? <a href="javascript:void(0);" onclick="showSignUpForm()">Buat Akun</a></p>
+
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Pop-up Form Register -->
+    <div id="signUpForm" style="display: none;">
+        <div class="popup-content">
+            <h2>Buat Akun Baru</h2>
+            <form id="registerForm">
+                <label for="newEmail">Email:</label>
+                <input type="email" id="newEmail" name="newEmail" required placeholder="Masukkan email yang valid">
+
+                <label for="newPassword">Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required placeholder="Masukkan password">
+
+                <button type="submit">Daftar</button>
+                <button type="button" onclick="closeSignUpForm()">Tutup</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk menampilkan form pendaftaran
+        function showSignUpForm() {
+            document.getElementById("signUpForm").style.display = "block";
+        }
+
+        // Fungsi untuk menutup form pendaftaran
+        function closeSignUpForm() {
+            document.getElementById("signUpForm").style.display = "none";
+        }
+
+        // Fungsi untuk mengirim data pendaftaran ke backend
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("newEmail").value;
+            const password = document.getElementById("newPassword").value;
+
+            // Validasi email
+            if (!isValidEmail(email)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Email tidak valid! Pastikan email yang Anda masukkan benar.'
+                });
+                return;
+            }
+
+            // Kirim data pendaftaran ke backend
+            const formData = {
+                email: email,
+                password: password
+            };
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Kirimkan data sebagai JSON
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pendaftaran Berhasil!',
+                        text: 'Akun Anda telah dibuat, silakan login.'
+                    }).then(() => {
+                        closeSignUpForm();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: data.error
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Terjadi kesalahan, silakan coba lagi nanti.'
+                });
+            });
+        });
+
+        // Validasi Email
+        function isValidEmail(email) {
+            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return regex.test(email);
+        }
+    </script>
+</body>
+</html>

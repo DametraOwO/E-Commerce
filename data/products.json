@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Fantech WGP 13S Gamepad",
+        "price": 250000,
+        "stock": 5,
+        "image": "images/wgp13s.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Rexus Arka II Mouse",
+        "price": 300000,
+        "stock": 10,
+        "image": "images/arkaii.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Rexus Daiva D68 Mechanical Keyboard",
+        "price": 500000,
+        "stock": 5,
+        "image": "images/daivad68.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Armageddon Nuke 9 Headset",
+        "price": 200000,
+        "stock": 20,
+        "image": "images/nuke9.jpg"
+    },
+    {
+        "id": 5,
+        "name": "PXN A7 Racing Gear",
+        "price": 10000000,
+        "stock": 2,
+        "image": "images/drive.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Oculus Quest 2",
+        "price": 5000000,
+        "stock": 3,
+        "image": "images/oculus.jpeg"
+    },
+    {
+        "id": 7,
+        "name": "Mechanical Keyboard Switch",
+        "price": 2000,
+        "stock": 50,
+        "image": "images/switch.jpeg"
+    },
+    {
+        "id": 8,
+        "name": "Rexus Cooling Pad Breeze B140",
+        "price": 185000,
+        "stock": 12,
+        "image": "images/coolpad.jpg"
+    }
+]

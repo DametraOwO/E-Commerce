@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  
+</head>
+<body>
+    <header>
+        <h1>Checkout Berhasil</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Beranda</a></li>
+                <li><a href="{{ url_for('cart') }}">Keranjang</a></li>
+                <li><a href="{{ url_for('admin_products') }}">Manajemen Produk</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Laporan Penjualan</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Terima kasih telah berbelanja!</h2>
+        <p>Pesanan Anda telah diproses.</p>
+    </div>
+</body>
+</html>
